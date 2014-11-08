@@ -6,9 +6,11 @@
 	position: absolute;
 	top: 5px;
 	right: 5px;
-	overflow-y: auto;
+	overflow-y: hidden;
 	padding-top: 5px;
 	padding-bottom: 5px;
+
+	-webkit-transition: all 1s;
 }
 
 .jslogviewer p{
@@ -18,4 +20,8 @@
 	border-bottom: 1px solid #fff;
 	font-family: "Trebuchet MS", Monaco, monospace;
 	font-size: 14px;
+}
+
+.jslogviewer:hover {
+	overflow-y: auto;
 }

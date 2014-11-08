@@ -12,7 +12,12 @@ var jsLog = function() {
 	}
 
 	appendToViewer = function(log) {
-		$("<p>"+log+"</p>").appendTo('.jslogviewer');
+		$("<p>"+log+"</p>").hide().appendTo('.jslogviewer').fadeIn('slow');
+		scrollToBottom();
+	}
+
+	scrollToBottom = function() {
+		$('.jslogviewer').scrollTop($('.jslogviewer').prop('scrollHeight'));
 	}
 
 	parseLog = function(log) {
@@ -20,7 +25,7 @@ var jsLog = function() {
 	}
 
 	initViewer = function() {
-		var viewer = "<div class='jslogviewer'></div>";
+		var viewer = "<div class='jslogviewer'><span id='minimize'>-</span></div>";
 		$(viewer).appendTo('body');
 	}
 
