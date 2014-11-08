@@ -3,11 +3,18 @@
 <head>
 	<meta charset="UTF-8">
 	<title>jsLog</title>	
+	<link rel="stylesheet" href="css/jslog.css">
 </head>
 <body>
 	
-	
+	<button>Click Me</button>
+
 	<script src="js/jquery-2.1.1.min.js"></script>
-	<script src="js/jsLog.js"></script>
+	<script src="js/jslog.js"></script>
+	<script>
+		$('button').on('click', function() {
+			console.log('ok');
+		});
+	</script>
 </body>
 </html>

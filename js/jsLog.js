@@ -6,24 +6,29 @@ var jsLog = function() {
 
 	interceptLog = function(arguments) {
 		if(arguments) {
-			var log = arguments;
+			var log = parseLog(arguments);
 			appendToViewer(log);
 		}
 	}
 
 	appendToViewer = function(log) {
-		var log = parseLog(log);
-		$("<p>"+log+"</p>").appendTo('body');
+		$("<p>"+log+"</p>").appendTo('.jslogviewer');
 	}
 
 	parseLog = function(log) {
 		return JSON.stringify(log);
 	}
 
+	initViewer = function() {
+		var viewer = "<div class='jslogviewer'></div>";
+		$(viewer).appendTo('body');
+	}
+
 	return {
 
 		init:  function() {
 			this.bindUI();
+			initViewer();
 		},
 		bindUI: function() {
 			takeOverConsole();
