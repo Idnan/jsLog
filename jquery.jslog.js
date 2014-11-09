@@ -56,9 +56,7 @@ if ( typeof Object.create !== 'function' ) {
                 this.el.css({'color': 'rgb(131, 255, 133)'});
             }
 
-            $(this.el).hide().appendTo(this.vc).fadeIn('slow');
-
-
+            $(this.el).appendTo(this.vc);
             this.scrollToBottom();
         },
 
