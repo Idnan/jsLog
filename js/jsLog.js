@@ -14,8 +14,8 @@ if ( typeof Object.create !== 'function' ) {
     var JSLog = {
 
         init: function (options, elem) {
-            
-            this.options = $.extend( {}, $.jsLog.options, options );           
+
+            this.options = $.extend( {}, $.jsLog.options, options );
 
             // Start the processing
             this.bindUI();
@@ -29,24 +29,26 @@ if ( typeof Object.create !== 'function' ) {
         },
 
         takeOverConsole : function() {
+            console.original = console.log;
             console.log = this.interceptLog;
         },
 
         interceptLog : function(log) {
             if(log) {
                 JSLog.appendToViewer(JSON.stringify(log));
+                console.original(log);
             }
         },
 
         appendToViewer : function(log) {
-            this.el = "<p>"+log+"</p>";            
+            this.el = "<p>"+log+"</p>";
             $(this.el).hide().appendTo('.jslogviewer').fadeIn('slow');
             this.scrollToBottom();
         },
 
         scrollToBottom : function() {
             $('.jslogviewer').scrollTop($('.jslogviewer').prop('scrollHeight'));
-        },        
+        },
 
         initViewer : function() {
             this.viewerEl = $("<div class='jslogviewer'></div>");
