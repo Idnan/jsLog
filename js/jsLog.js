@@ -13,6 +13,8 @@ if ( typeof Object.create !== 'function' ) {
 
     var JSLog = {
 
+        vc : '.jslogviewer',
+
         init: function (options, elem) {
 
             this.options = $.extend( {}, $.jsLog.options, options );
@@ -41,13 +43,13 @@ if ( typeof Object.create !== 'function' ) {
         },
 
         appendToViewer : function(log) {
-            this.el = "<p>"+log+"</p>";
-            $(this.el).hide().appendTo('.jslogviewer').fadeIn('slow');
+            this.el = $("<p>"+log+"</p>");
+            $(this.el).hide().appendTo(this.vc).fadeIn('slow');
             this.scrollToBottom();
         },
 
         scrollToBottom : function() {
-            $('.jslogviewer').scrollTop($('.jslogviewer').prop('scrollHeight'));
+            $(this.vc).scrollTop($(this.vc).prop('scrollHeight'));
         },
 
         initViewer : function() {
@@ -60,12 +62,37 @@ if ( typeof Object.create !== 'function' ) {
                 'right': this.options.right
             });
             $(this.viewerEl).appendTo('body');
+        },
+
+        clearViewer : function() {
+            this.viewerEl.empty();
+        },
+
+        hideViewer : function() {
+            this.viewerEl.fadeOut('slow');
+        },
+
+        showViewer : function() {
+            this.viewerEl.fadeIn('slow');
         }
     };
 
     $.jsLog = function(options) {
         var jsLog = Object.create( JSLog );
         jsLog.init(options, this);
+
+        return {
+            clear : function() {
+                jsLog.clearViewer();
+            },
+            hide : function() {
+                jsLog.hideViewer();
+            }, 
+            show : function() {
+                jsLog.showViewer();
+            }, 
+               
+        }
     };
 
     $.jsLog.options = {
