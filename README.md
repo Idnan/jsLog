@@ -14,4 +14,4 @@ Displays logs and Javascript errors in an overlay on top of your site. Useful fo
 
 #What does it do?
 
-It captures console.log, console.info and displays it in an overlay on top of your site. That's it.
+It captures ```console.log``` and displays it in an overlay on top of your site. That's it.
