@@ -32,7 +32,14 @@ if ( typeof Object.create !== 'function' ) {
 
         takeOverConsole : function() {
             console.original = console.log;
+            window.onerror = this.interceptError;
             console.log = this.interceptLog;
+        },
+
+        interceptError: function(msg, url, linenumber) {
+            if (msg) {
+                JSLog.appendToViewer(JSON.stringify(msg), 'error');
+            }
         },
 
         interceptLog : function(log) {
@@ -42,9 +49,16 @@ if ( typeof Object.create !== 'function' ) {
             }
         },
 
-        appendToViewer : function(log) {
+        appendToViewer : function(log, type) {
             this.el = $("<p>"+log+"</p>");
+
+            if (type == 'error') {
+                this.el.css({'color': 'rgb(131, 255, 133)'});
+            }
+
             $(this.el).hide().appendTo(this.vc).fadeIn('slow');
+
+
             this.scrollToBottom();
         },
 
@@ -87,20 +101,20 @@ if ( typeof Object.create !== 'function' ) {
             },
             hide : function() {
                 jsLog.hideViewer();
-            }, 
+            },
             show : function() {
                 jsLog.showViewer();
-            }, 
-               
+            },
+
         }
     };
 
     $.jsLog.options = {
-        width: '490px',
-        height: '200px',
-        background: 'rgba(0, 0, 0, 0.5)',
-        top: '5px',
-        right: '5px'
+        'width': '490px',
+        'height': '200px',
+        'background': 'rgba(0, 0, 0, 0.5)',
+        'top': '5px',
+        'right': '5px'
     };
 
 })( jQuery, window, document );
