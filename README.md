@@ -11,3 +11,7 @@ Displays logs and Javascript errors in an overlay on top of your site. Useful fo
 <pre><code>&lt;script src="jquery.jslog.min.js"&gt;&lt;/script&gt;</code></pre>
 
 - Then simply do ```$.jsLog()``` and see the magic
+
+#What does it do?
+
+It captures console.log, console.info and displays it in an overlay on top of your site. That's it.
