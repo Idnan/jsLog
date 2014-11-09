@@ -16,15 +16,15 @@ if ( typeof Object.create !== 'function' ) {
         init: function () {
 
             // Generate the custom console
-            this.generateConsole();
+            JSLog.generateConsole();
             // Take over the browser console
-            this.takeOverConsole();
+            JSLog.takeOverConsole();
         },
 
         takeOverConsole : function() {
             console.original = console.log;
-            window.onerror = this.interceptError;
-            console.log = this.interceptLog;
+            window.onerror = JSLog.interceptError;
+            console.log = JSLog.interceptLog;
         },
 
         interceptError: function(msg, url, linenumber) {
@@ -41,39 +41,38 @@ if ( typeof Object.create !== 'function' ) {
         },
 
         appendToViewer : function(log, type) {
-            this.logEl = $("<p></p>", {
+            JSLog.logEl = $("<p></p>", {
                text : log,
                class : ( type === 'error' ) ? 'clog-error' : 'clog-msg',
-               css : { 'color' : ( type === 'error' ) ? '#F00C0C' : '#000000' }
             });
 
-            this.logEl.appendTo( this.consoleViewerEl );
-            this.scrollToBottom();
+            JSLog.consoleViewerEl.append( JSLog.logEl );
+            $.proxy( JSLog.scrollToBottom, this);
         },
 
         scrollToBottom : function() {
-            this.consoleViewerEl.scrollTop( this.consoleViewerEl.prop('scrollHeight') );
+            JSLog.consoleViewerEl.scrollTop( JSLog.consoleViewerEl.prop('scrollHeight') );
         },
 
         generateConsole : function() {
 
-            this.consoleViewerEl = $("<div></div>", {
+            JSLog.consoleViewerEl = $("<div></div>", {
                 class : "clog-viewer"
             });
 
-            this.consoleViewerEl.appendTo('body');
+            $('body').append( JSLog.consoleViewerEl );
         },
 
         clearViewer : function() {
-            this.consoleViewerEl.empty();
+            JSLog.consoleViewerEl.empty();
         },
 
         hideViewer : function() {
-            this.consoleViewerEl.hide('slow');
+            JSLog.consoleViewerEl.hide('slow');
         },
 
         showViewer : function() {
-            this.consoleViewerEl.show('slow');
+            JSLog.consoleViewerEl.show('slow');
         }
     };
 
