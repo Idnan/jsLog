@@ -13,21 +13,12 @@ if ( typeof Object.create !== 'function' ) {
 
     var JSLog = {
 
-        vc : '.jslogviewer',
+        init: function () {
 
-        init: function (options, elem) {
-
-            this.options = $.extend( {}, $.jsLog.options, options );
-
-            // Start the processing
-            this.bindUI();
-            this.initViewer();
-        },
-
-        bindUI: function () {
-
+            // Generate the custom console
+            this.generateConsole();
+            // Take over the browser console
             this.takeOverConsole();
-            this.interceptLog();
         },
 
         takeOverConsole : function() {
@@ -50,48 +41,45 @@ if ( typeof Object.create !== 'function' ) {
         },
 
         appendToViewer : function(log, type) {
-            this.el = $("<p>"+log+"</p>");
+            this.logEl = $("<p></p>", {
+               text : log,
+               class : ( type === 'error' ) ? 'clog-error' : 'clog-msg',
+               css : { 'color' : ( type === 'error' ) ? '#F00C0C' : '#000000' }
+            });
 
-            if (type == 'error') {
-                this.el.css({'color': 'rgb(131, 255, 133)'});
-            }
-
-            $(this.el).appendTo(this.vc);
+            this.logEl.appendTo( this.consoleViewerEl );
             this.scrollToBottom();
         },
 
         scrollToBottom : function() {
-            $(this.vc).scrollTop($(this.vc).prop('scrollHeight'));
+            this.consoleViewerEl.scrollTop( this.consoleViewerEl.prop('scrollHeight') );
         },
 
-        initViewer : function() {
-            this.viewerEl = $("<div class='jslogviewer'></div>");
-            this.viewerEl.css({
-                'width': this.options.width,
-                'height': this.options.height,
-                'background': this.options.background,
-                'top': this.options.top,
-                'right': this.options.right
+        generateConsole : function() {
+
+            this.consoleViewerEl = $("<div></div>", {
+                class : "clog-viewer"
             });
-            $(this.viewerEl).appendTo('body');
+
+            this.consoleViewerEl.appendTo('body');
         },
 
         clearViewer : function() {
-            this.viewerEl.empty();
+            this.consoleViewerEl.empty();
         },
 
         hideViewer : function() {
-            this.viewerEl.fadeOut('slow');
+            this.consoleViewerEl.hide('slow');
         },
 
         showViewer : function() {
-            this.viewerEl.fadeIn('slow');
+            this.consoleViewerEl.show('slow');
         }
     };
 
-    $.jsLog = function(options) {
+    $.jsLog = function() {
         var jsLog = Object.create( JSLog );
-        jsLog.init(options, this);
+        jsLog.init();
 
         return {
             clear : function() {
@@ -105,14 +93,6 @@ if ( typeof Object.create !== 'function' ) {
             },
 
         }
-    };
-
-    $.jsLog.options = {
-        'width': '490px',
-        'height': '200px',
-        'background': 'rgba(0, 0, 0, 0.5)',
-        'top': '5px',
-        'right': '5px'
     };
 
 })( jQuery, window, document );
