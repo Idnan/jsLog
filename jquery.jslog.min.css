@@ -1,0 +1,1 @@
+.jslogviewer{width:490px;height:200px;background:rgba(0,0,0,.54);border-radius:5px;position:absolute;top:5px;right:5px;overflow-y:hidden;padding-top:5px;padding-bottom:5px;-webkit-transition:all 1s}.jslogviewer p{padding:0 0 2px;margin:5px 10px;color:#fff;border-bottom:1px solid #fff;font-family:"Trebuchet MS",Monaco,monospace;font-size:14px}.jslogviewer:hover{overflow-y:auto}
