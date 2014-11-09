@@ -1,4 +1,4 @@
-#Console-js
+#jsLog
 
 Displays logs and Javascript errors in an overlay on top of your site. Useful for web development. By using this plugin you don't need to open console of your browser again and again. This plugin will show show you all of your console log in the overlay. You can also control the position, background, width and height of the overlay. Works on following browsers browser (IE9, IE10, Chrome, Firefox).
 
