@@ -2,6 +2,8 @@
 
 Displays logs and Javascript errors in an overlay on top of your site. Useful for web development. Installed in 5 seconds. Works on following browsers browser (IE9, IE10, Chrome, Firefox).
 
+<img src="http://i.imgur.com/I6K2J3U.png" title="source: imgur.com" />
+
 #How to install (in 5 seconds)?
 - Add this piece of code somewhere in your html-page. Save document, refresh browser.
 
