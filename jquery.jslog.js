@@ -13,27 +13,18 @@ if ( typeof Object.create !== 'function' ) {
 
     var JSLog = {
 
-        vc : '.jslogviewer',
+        init: function () {
 
-        init: function (options, elem) {
-
-            this.options = $.extend( {}, $.jsLog.options, options );
-
-            // Start the processing
-            this.bindUI();
-            this.initViewer();
-        },
-
-        bindUI: function () {
-
-            this.takeOverConsole();
-            this.interceptLog();
+            // Generate the custom console
+            JSLog.generateConsole();
+            // Take over the browser console
+            JSLog.takeOverConsole();
         },
 
         takeOverConsole : function() {
             console.original = console.log;
-            window.onerror = this.interceptError;
-            console.log = this.interceptLog;
+            window.onerror = JSLog.interceptError;
+            console.log = JSLog.interceptLog;
         },
 
         interceptError: function(msg, url, linenumber) {
@@ -50,48 +41,44 @@ if ( typeof Object.create !== 'function' ) {
         },
 
         appendToViewer : function(log, type) {
-            this.el = $("<p>"+log+"</p>");
+            JSLog.logEl = $("<p></p>", {
+               text : log,
+               class : ( type === 'error' ) ? 'clog-error' : 'clog-msg',
+            });
 
-            if (type == 'error') {
-                this.el.css({'color': 'rgb(131, 255, 133)'});
-            }
-
-            $(this.el).appendTo(this.vc);
-            this.scrollToBottom();
+            JSLog.consoleViewerEl.append( JSLog.logEl );
+            $.proxy( JSLog.scrollToBottom, this);
         },
 
         scrollToBottom : function() {
-            $(this.vc).scrollTop($(this.vc).prop('scrollHeight'));
+            JSLog.consoleViewerEl.scrollTop( JSLog.consoleViewerEl.prop('scrollHeight') );
         },
 
-        initViewer : function() {
-            this.viewerEl = $("<div class='jslogviewer'></div>");
-            this.viewerEl.css({
-                'width': this.options.width,
-                'height': this.options.height,
-                'background': this.options.background,
-                'top': this.options.top,
-                'right': this.options.right
+        generateConsole : function() {
+
+            JSLog.consoleViewerEl = $("<div></div>", {
+                class : "clog-viewer"
             });
-            $(this.viewerEl).appendTo('body');
+
+            $('body').append( JSLog.consoleViewerEl );
         },
 
         clearViewer : function() {
-            this.viewerEl.empty();
+            JSLog.consoleViewerEl.empty();
         },
 
         hideViewer : function() {
-            this.viewerEl.fadeOut('slow');
+            JSLog.consoleViewerEl.hide('slow');
         },
 
         showViewer : function() {
-            this.viewerEl.fadeIn('slow');
+            JSLog.consoleViewerEl.show('slow');
         }
     };
 
-    $.jsLog = function(options) {
+    $.jsLog = function() {
         var jsLog = Object.create( JSLog );
-        jsLog.init(options, this);
+        jsLog.init();
 
         return {
             clear : function() {
@@ -105,14 +92,6 @@ if ( typeof Object.create !== 'function' ) {
             },
 
         }
-    };
-
-    $.jsLog.options = {
-        'width': '490px',
-        'height': '200px',
-        'background': 'rgba(0, 0, 0, 0.5)',
-        'top': '5px',
-        'right': '5px'
     };
 
 })( jQuery, window, document );
