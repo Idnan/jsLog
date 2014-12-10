@@ -14,4 +14,4 @@ jsLog is a small jQuery plugin that is usefull for web developers in displying c
 
 # What does it do?
 
-It captures ```console.log``` and errors and displays it in an overlay on your site. That's it.
+It captures ```console.log``` and ```errors``` and displays it in an overlay on your site. That's it.
